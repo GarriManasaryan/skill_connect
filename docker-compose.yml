@@ -1,0 +1,30 @@
+version: "3"
+services:
+  database:
+    image: postgres:14.5
+    container_name: db_skill_connect
+    hostname: db_skill_connect_host
+    environment:
+      - POSTGRES_PASSWORD=1
+      - POSTGRES_USER=postgres
+
+    volumes:
+      - pg_skill_connect:/var/lib/postgresql/data
+
+    expose:
+      - "5433"
+    ports:
+      - "5433:5433"
+    command: -p 5433
+
+  backend:
+    #    image: garrri/testing_system_backend:latest
+    depends_on:
+      - database
+    build:
+      dockerfile: Dockerfile.bk
+    ports:
+      - "8080:8080"
+
+volumes:
+  pg_skill_connect:

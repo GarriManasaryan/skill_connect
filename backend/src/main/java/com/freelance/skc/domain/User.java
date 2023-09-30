@@ -1,4 +1,5 @@
 package com.freelance.skc.domain;
 
-public record Test2() {
+public interface User {
+
 }

@@ -23,10 +23,14 @@ task copyAppJar(type:Copy){
 }
 
 dependencies {
+	implementation 'junit:junit:4.13.1'
+	compileOnly 'org.jetbrains:annotations:23.0.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.flywaydb:flyway-core'
+	runtimeOnly 'org.flywaydb:flyway-core'
+	implementation 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.assertj:assertj-core:3.23.1'
 }
 
 tasks.named('test') {
