@@ -1,0 +1,25 @@
+{
+  "short_name": "Skill connect",
+  "name": "Skill connect",
+  "icons": [
+    {
+      "src": "sc_logo.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "sc_logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "sc_logo.png",
+      "type": "image/png",
+      "sizes": "460x460"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
