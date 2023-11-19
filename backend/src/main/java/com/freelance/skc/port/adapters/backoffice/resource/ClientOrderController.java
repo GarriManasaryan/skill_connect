@@ -21,17 +21,17 @@ public class ClientOrderController {
         this.clientOrderService = clientOrderService;
     }
 
-    @PostMapping("/api/client-orders")
+    @PostMapping("/api/client-order")
     public void save(@RequestBody @NotNull ClientOrderCreationRequest clientOrderCreationRequest) {
         clientOrderService.save(clientOrderCreationRequest);
     }
 
-    @DeleteMapping("/api/client-orders/{id}")
+    @DeleteMapping("/api/client-order/{id}")
     public void delete(@PathVariable(name = "id", required = true) String id) {
         clientOrderService.delete(id);
     }
 
-    @GetMapping("/api/client-orders")
+    @GetMapping("/api/client-order")
     public List<ClientOrderBackofficeModel> all(@RequestParam(name = "email", required = true) String email) {
         return clientOrderService.all(email);
     }

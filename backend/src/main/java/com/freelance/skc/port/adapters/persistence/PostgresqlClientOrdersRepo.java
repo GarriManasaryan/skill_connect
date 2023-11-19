@@ -16,11 +16,11 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Repository
-public class PostgresqlClientOrders implements ClientOrderRepo {
+public class PostgresqlClientOrdersRepo implements ClientOrderRepo {
 
     private final NamedParameterJdbcOperations jdbcOperations;
 
-    public PostgresqlClientOrders(DataSource dataSource) {
+    public PostgresqlClientOrdersRepo(DataSource dataSource) {
         this.jdbcOperations = new NamedParameterJdbcTemplate(dataSource);
     }
 
