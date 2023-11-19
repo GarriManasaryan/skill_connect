@@ -13,6 +13,6 @@ public record UserBackofficeModel(
         @NotNull Role role,
         @NotNull Integer age,
         @NotNull UserDiscriminator discriminator,
-        @NotNull OffsetDateTime lastUpdatedAt
+        @NotNull String timeZone
 ) {
 }

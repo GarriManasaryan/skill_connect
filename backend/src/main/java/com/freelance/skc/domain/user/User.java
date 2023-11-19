@@ -12,7 +12,7 @@ public record User(
         @NotNull Role role,
         @NotNull Integer age,
         @NotNull UserDiscriminator discriminator,
-        @NotNull OffsetDateTime lastUpdatedAt
+        @NotNull String timeZone
 ) {
 
     public static User of(
@@ -20,7 +20,8 @@ public record User(
             @NotNull String email,
             @NotNull Role role,
             @NotNull Integer age,
-            @NotNull UserDiscriminator discriminator
+            @NotNull UserDiscriminator discriminator,
+            @NotNull String timeZone
     ) {
         return new User(
                 IdGenerator.generate("usr"),
@@ -29,7 +30,7 @@ public record User(
                 role,
                 age,
                 discriminator,
-                OffsetDateTime.now()
+                timeZone
         );
     }
 

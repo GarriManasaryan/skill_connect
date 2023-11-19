@@ -24,7 +24,8 @@ public class UserService {
                 userCreationRequest.email(),
                 userCreationRequest.role(),
                 userCreationRequest.age(),
-                UserDiscriminator.valueOf(userCreationRequest.discriminator())
+                UserDiscriminator.valueOf(userCreationRequest.discriminator()),
+                userCreationRequest.timeZone()
         ));
     }
 
@@ -41,7 +42,7 @@ public class UserService {
                         user.role(),
                         user.age(),
                         user.discriminator(),
-                        user.lastUpdatedAt()
+                        user.timeZone()
                 ))
                 .toList();
     }

@@ -32,7 +32,7 @@ public class PostgresqlUserRepo implements UserRepo {
                 Role.valueOf(rs.getString("role")),
                 rs.getInt("age"),
                 UserDiscriminator.valueOf(rs.getString("discriminator")),
-                rs.getObject("last_updated_at", OffsetDateTime.class)
+                rs.getString("time_zone")
         );
     }
 
@@ -40,9 +40,9 @@ public class PostgresqlUserRepo implements UserRepo {
     public void save(User user) {
         var sqlTemplate = """
                 insert into sc_users
-                (id, name, email, role, age, discriminator, last_updated_at)
+                (id, name, email, role, age, discriminator, time_zone)
                 values
-                (:id, :name, :email, :role, :age, :discriminator, :last_updated_at::timestamp with time zone)
+                (:id, :name, :email, :role, :age, :discriminator, :time_zone)
                 """;
 
         var queryParams = new MapSqlParameterSource()
@@ -52,7 +52,7 @@ public class PostgresqlUserRepo implements UserRepo {
                 .addValue("role", user.role().name())
                 .addValue("age", user.age())
                 .addValue("discriminator", user.discriminator().name())
-                .addValue("last_updated_at", new Timestamp(1000 * user.lastUpdatedAt().toEpochSecond()));
+                .addValue("time_zone", user.timeZone());
 
         jdbcOperations.update(sqlTemplate, queryParams);
 

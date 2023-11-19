@@ -11,6 +11,7 @@ public record UserCreationRequest(
         @NotNull String email,
         @NotNull Role role,
         @NotNull Integer age,
-        @NotNull String discriminator
+        @NotNull String discriminator,
+        @NotNull String timeZone
 ) {
 }
