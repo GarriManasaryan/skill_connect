@@ -23,8 +23,32 @@ services:
       - database
     build:
       dockerfile: Dockerfile.bk
+    environment:
+      - SPRING_RABBITMQ_HOST=my-rabbit
     ports:
       - "8080:8080"
 
+  rabbitmq:
+    image: rabbitmq:management
+    hostname: my-rabbit
+    depends_on:
+      - backend
+    restart: no
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    expose:
+      - "5672"
+    volumes:
+      - rbmq_data:/var/lib/rabbitmq/
+
+#    networks:
+#      -
+
+
 volumes:
   pg_skill_connect:
+  rbmq_data:
+
+#networks:
+##  shared networks - как расшарить с неск сервисами

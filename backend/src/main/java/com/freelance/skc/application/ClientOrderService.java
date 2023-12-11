@@ -1,5 +1,6 @@
 package com.freelance.skc.application;
 
+import com.freelance.skc.application.validators.FKChecker;
 import com.freelance.skc.domain.orders.ClientOrder;
 import com.freelance.skc.domain.orders.ClientOrderRepo;
 import com.freelance.skc.domain.orders.OrderType;
@@ -11,7 +12,6 @@ import com.freelance.skc.port.adapters.backoffice.model.orders.ClientOrderCreati
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
@@ -20,16 +20,31 @@ import java.util.List;
 public class ClientOrderService {
 
     private final ClientOrderRepo clientOrderRepo;
+    private final FKChecker<FreelanceServiceRepo> fkServiceChecker;
+    private final FKChecker<UserRepo> fkUserChecker;
     private final UserRepo userRepo;
     private final FreelanceServiceRepo freelanceServiceRepo;
 
-    public ClientOrderService(ClientOrderRepo clientOrderRepo, UserRepo userRepo, FreelanceServiceRepo freelanceServiceRepo) {
+    public ClientOrderService(
+            ClientOrderRepo clientOrderRepo,
+            FKChecker<FreelanceServiceRepo> fkServiceChecker,
+            FKChecker<UserRepo> fkUserChecker,
+            UserRepo userRepo,
+            FreelanceServiceRepo freelanceServiceRepo
+    ) {
         this.clientOrderRepo = clientOrderRepo;
+        this.fkServiceChecker = fkServiceChecker;
+        this.fkUserChecker = fkUserChecker;
         this.userRepo = userRepo;
         this.freelanceServiceRepo = freelanceServiceRepo;
     }
 
     public void save(ClientOrderCreationRequest clientOrderCreationRequest) {
+        // validation
+        fkServiceChecker.validate(freelanceServiceRepo, clientOrderCreationRequest.serviceId(), "service not found");
+        fkUserChecker.validate(userRepo, clientOrderCreationRequest.clientId(), "user not found");
+
+        // save
         clientOrderRepo.save(ClientOrder.of(
                 clientOrderCreationRequest.clientId(),
                 clientOrderCreationRequest.title(),

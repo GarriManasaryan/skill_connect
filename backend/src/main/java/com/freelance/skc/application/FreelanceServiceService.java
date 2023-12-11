@@ -1,6 +1,7 @@
 package com.freelance.skc.application;
 
 import com.freelance.skc.application.validation.FKCheckerV2;
+import com.freelance.skc.application.validators.FKChecker;
 import com.freelance.skc.domain.service.FreelanceService;
 import com.freelance.skc.domain.service.FreelanceServiceRepo;
 import com.freelance.skc.port.adapters.backoffice.model.service.FreelanceServiceBackofficeModel;
@@ -16,12 +17,14 @@ import java.util.List;
 public class FreelanceServiceService {
 
     private final FreelanceServiceRepo freelanceServiceRepo;
-    private final FKCheckerV2 fkCheckerV2;
+    private final FKChecker<FreelanceServiceRepo> fkChecker;
 
-
-    public FreelanceServiceService(FreelanceServiceRepo freelanceServiceRepo, FKCheckerV2 fkCheckerV2) {
+    public FreelanceServiceService(
+            FreelanceServiceRepo freelanceServiceRepo,
+            FKChecker<FreelanceServiceRepo> fkChecker
+    ) {
         this.freelanceServiceRepo = freelanceServiceRepo;
-        this.fkCheckerV2 = fkCheckerV2;
+        this.fkChecker = fkChecker;
     }
 
     public void save(@NotNull FreelanceServiceCreationRequest freelanceServiceCreationRequest) {
@@ -30,10 +33,12 @@ public class FreelanceServiceService {
             throw new IllegalStateException("ParentId not found");
         }
 
-//        fkChecker.validate(freelanceServiceRepo, freelanceServiceCreationRequest.parentId());
-
-//        // freelanceServiceRepo заменить на юзерРепо, но не суть пока
-//        fkCheckerV2.validate(freelanceServiceRepo, freelanceServiceCreationRequest.parentId());
+        // validation
+        fkChecker.validate(
+                freelanceServiceRepo,
+                freelanceServiceCreationRequest.parentId(),
+                "parentId not found"
+        );
 
         freelanceServiceRepo.save(FreelanceService.of(
                 freelanceServiceCreationRequest.name(),

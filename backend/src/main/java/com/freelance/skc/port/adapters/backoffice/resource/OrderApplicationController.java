@@ -1,9 +1,7 @@
 package com.freelance.skc.port.adapters.backoffice.resource;
 
-import com.freelance.skc.application.ClientOrderService;
 import com.freelance.skc.application.OrderApplicationService;
-import com.freelance.skc.port.adapters.backoffice.model.orders.ClientOrderBackofficeModel;
-import com.freelance.skc.port.adapters.backoffice.model.orders.ClientOrderCreationRequest;
+import com.freelance.skc.application.rabbit.RabbitMQProducer;
 import com.freelance.skc.port.adapters.backoffice.model.orders.OrderApplicationBackofficeModel;
 import com.freelance.skc.port.adapters.backoffice.model.orders.OrderApplicationCreationRequest;
 import org.jetbrains.annotations.NotNull;
@@ -16,14 +14,21 @@ import java.util.List;
 public class OrderApplicationController {
 
     private final OrderApplicationService orderApplicationService;
+    private final RabbitMQProducer rabbitMQProducer;
 
-    public OrderApplicationController(OrderApplicationService orderApplicationService) {
+    public OrderApplicationController(OrderApplicationService orderApplicationService, RabbitMQProducer rabbitMQProducer) {
         this.orderApplicationService = orderApplicationService;
+        this.rabbitMQProducer = rabbitMQProducer;
     }
 
     @PostMapping("/api/order-application")
     public void save(@RequestBody @NotNull OrderApplicationCreationRequest orderApplicationCreationRequest) {
         orderApplicationService.save(orderApplicationCreationRequest);
+    }
+
+    @PostMapping("/api/publish/order-application")
+    public void publish(@RequestBody @NotNull OrderApplicationCreationRequest orderApplicationCreationRequest) {
+        rabbitMQProducer.sendOrderApplication(orderApplicationCreationRequest);
     }
 
     @DeleteMapping("/api/order-application/{id}")

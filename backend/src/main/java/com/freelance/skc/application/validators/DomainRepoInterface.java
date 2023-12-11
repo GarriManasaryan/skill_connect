@@ -4,6 +4,9 @@ import java.util.List;
 
 public interface DomainRepoInterface<T extends DomainInterface> {
 
+
     List<T> all();
+
+    void save(T object);
 
 }

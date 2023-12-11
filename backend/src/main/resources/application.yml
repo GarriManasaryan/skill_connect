@@ -4,7 +4,8 @@ spring:
 
   datasource:
 #    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://db_skill_connect_host:5433/db_skill_connect
+#    url: jdbc:postgresql://db_skill_connect_host:5433/db_skill_connect
+    url: jdbc:postgresql://localhost:5433/db_skill_connect
     username: postgres
     password: 1
 
@@ -15,6 +16,22 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+#  rabbitmq:
+##    host: my-rabbit
+#    host: localhost
+#    port: 5672
+##    addresses: localhost:5672
+#    username: guest
+#    password: guest
+#
+#rabbitmq-config:
+#  queue:
+#    name: first_queue
+#  exchange:
+#    name: first_exchange
+#  routing-key:
+#    name: first_key
 
 #  spring.servlet.multipart.max-file-size=10MB
 #  spring.servlet.multipart.max-request-size=10MB

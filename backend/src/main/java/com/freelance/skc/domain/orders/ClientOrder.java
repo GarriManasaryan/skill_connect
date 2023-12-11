@@ -1,6 +1,7 @@
 package com.freelance.skc.domain.orders;
 
 import com.freelance.skc.application.IdGenerator;
+import com.freelance.skc.application.validators.DomainInterface;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,7 +15,7 @@ public record ClientOrder(
         @NotNull String serviceId,
         @NotNull OrderType orderType,
         @Nullable OffsetDateTime endAt
-) {
+) implements DomainInterface {
     public static ClientOrder of(
             @NotNull String clientId,
             @NotNull String title,

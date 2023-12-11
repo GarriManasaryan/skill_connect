@@ -1,85 +1,72 @@
 package com.freelance.skc.port.adapters.persistence;
 
-import com.freelance.skc.domain.orders.*;
-import org.springframework.dao.DataAccessException;
+import com.freelance.skc.domain.orders.OrderApplication;
+import com.freelance.skc.domain.orders.OrderApplicationRepo;
+import com.freelance.skc.domain.orders.OrderApplicationStatus;
+import com.freelance.skc.port.adapters.persistence.handlers.JdbcPostgresExecuterRepo;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.Timestamp;
+import java.text.MessageFormat;
 import java.time.OffsetDateTime;
 import java.util.List;
+
+import static com.freelance.skc.port.adapters.persistence.models.OrderApplicationSQLModel.*;
+
 
 @Repository
 public class PostgresqlOrderApplicationRepo implements OrderApplicationRepo {
 
-    private final NamedParameterJdbcOperations jdbcOperations;
 
-    public PostgresqlOrderApplicationRepo(DataSource dataSource) {
-        this.jdbcOperations = new NamedParameterJdbcTemplate(dataSource);
+    private final JdbcPostgresExecuterRepo jdbcPostgresExecuterRepo;
+
+    public PostgresqlOrderApplicationRepo(JdbcPostgresExecuterRepo jdbcPostgresExecuterRepo) {
+        this.jdbcPostgresExecuterRepo = jdbcPostgresExecuterRepo;
     }
 
-    private static RowMapper<OrderApplication> asOrderApplicationRowMapping(){
+    private static RowMapper<OrderApplication> asOrderApplicationRowMapping() {
         return (rs, rowNum) -> new OrderApplication(
-                rs.getString("id"),
-                rs.getString("profile_id"),
-                OrderApplicationStatus.valueOf(rs.getString("status")),
-                rs.getObject("applied_at", OffsetDateTime.class),
-                rs.getString("application_text"),
-                rs.getString("client_order_id")
+                rs.getString(id),
+                rs.getString(profileId),
+                OrderApplicationStatus.valueOf(rs.getString(status)),
+                rs.getObject(appliedAt, OffsetDateTime.class),
+                rs.getString(applicationText),
+                rs.getString(clientOrderId)
         );
     }
 
     @Override
-    public void save(OrderApplication orderApplication) {
-        var sqlTemplate = """
-                insert into sc_order_applications
-                (id, profile_id, status, applied_at, application_text, client_order_id)
+    public void save(@NotNull OrderApplication orderApplication) {
+        var sqlTemplate = MessageFormat.format("""
+                insert into {0}
+                ({1}, {2}, {3}, {4}, {5}, {6})
                 values
-                (:id, :profile_id, :status, :applied_at::timestamp, :application_text, :client_order_id)
-                """;
+                (:{1}, :{2}, :{3}, :{4}::timestamp, :{5}, :{6})
+                """, table,
+                id, profileId, status, appliedAt, applicationText, clientOrderId);
 
-        var queryParams = new MapSqlParameterSource()
-                .addValue("id", orderApplication.id())
-                .addValue("profile_id", orderApplication.profileId())
-                .addValue("status", orderApplication.orderApplicationStatus().name())
-                .addValue("applied_at", new Timestamp(1000 * orderApplication.appliedAt().toEpochSecond()))
-                .addValue("application_text", orderApplication.applicationText())
-                .addValue("client_order_id", orderApplication.clientOrderId());
+        var params = new MapSqlParameterSource()
+                .addValue(id, orderApplication.id())
+                .addValue(profileId, orderApplication.profileId())
+                .addValue(status, orderApplication.orderApplicationStatus().name())
+                .addValue(appliedAt, new Timestamp(1000 * orderApplication.appliedAt().toEpochSecond()))
+                .addValue(applicationText, orderApplication.applicationText())
+                .addValue(clientOrderId, orderApplication.clientOrderId());
 
-        try{
-            jdbcOperations.update(sqlTemplate, queryParams);
-        }
-        catch (DataAccessException e){
-            if (e.getCause().toString().contains("violates foreign key constraint")){
-                throw new IllegalStateException("Foreign key not found (DB)");
-            }
-        }
+        jdbcPostgresExecuterRepo.update(sqlTemplate, params);
 
     }
 
     @Override
     public void delete(String id) {
-        var sqlTemplate = """
-                delete from sc_order_applications
-                where id = :id
-                """;
-
-        var queryParams = new MapSqlParameterSource()
-                .addValue("id", id);
-
-        jdbcOperations.update(sqlTemplate, queryParams);
+        jdbcPostgresExecuterRepo.delete(table, id);
     }
 
     @Override
     public List<OrderApplication> all() {
-        var sqlTemplate = """
-                select * from sc_order_applications
-                """;
-
-        return jdbcOperations.query(sqlTemplate, new MapSqlParameterSource(), asOrderApplicationRowMapping());
+        return jdbcPostgresExecuterRepo.all(table, asOrderApplicationRowMapping());
     }
 }

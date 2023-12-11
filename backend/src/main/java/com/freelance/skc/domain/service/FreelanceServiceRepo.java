@@ -7,10 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface FreelanceServiceRepo extends DomainRepoIntV2 {
-
-    @Override
-    @NotNull List<String> allIds();
+public interface FreelanceServiceRepo extends DomainRepoInterface<FreelanceService> {
 
     void save(@NotNull FreelanceService freelanceService);
 
