@@ -21,22 +21,22 @@ public class OrderApplicationController {
         this.rabbitMQProducer = rabbitMQProducer;
     }
 
-    @PostMapping("/api/order-application")
+    @PostMapping("/api/order-applications")
     public void save(@RequestBody @NotNull OrderApplicationCreationRequest orderApplicationCreationRequest) {
         orderApplicationService.save(orderApplicationCreationRequest);
     }
 
-    @PostMapping("/api/publish/order-application")
+    @PostMapping("/api/publish/order-applications")
     public void publish(@RequestBody @NotNull OrderApplicationCreationRequest orderApplicationCreationRequest) {
         rabbitMQProducer.sendOrderApplication(orderApplicationCreationRequest);
     }
 
-    @DeleteMapping("/api/order-application/{id}")
+    @DeleteMapping("/api/order-applications/{id}")
     public void delete(@PathVariable(name = "id", required = true) String id) {
         orderApplicationService.delete(id);
     }
 
-    @GetMapping("/api/order-application")
+    @GetMapping("/api/order-applications")
     public List<OrderApplicationBackofficeModel> all(@RequestParam(name = "email", required = true) String email) {
         return orderApplicationService.all(email);
     }

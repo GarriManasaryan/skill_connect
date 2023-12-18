@@ -21,17 +21,17 @@ public class SkillController {
         this.skillService = skillService;
     }
 
-    @PostMapping("/api/skill")
+    @PostMapping("/api/skills")
     public void save(@RequestBody @NotNull SkillCreationRequest skillCreationRequest) {
         skillService.save(skillCreationRequest);
     }
 
-    @DeleteMapping("/api/skill/{id}")
+    @DeleteMapping("/api/skills/{id}")
     public void delete(@PathVariable(name = "id", required = true) String id) {
         skillService.delete(id);
     }
 
-    @GetMapping("/api/skill")
+    @GetMapping("/api/skills")
     public List<SkillBackofficeModel> all() {
         return skillService.all();
     }

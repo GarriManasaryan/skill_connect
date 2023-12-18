@@ -31,7 +31,6 @@ public class PostgresqlClientOrderRepo implements ClientOrderRepo {
                 rs.getString(clientId),
                 rs.getString(title),
                 rs.getString(description),
-                rs.getString(serviceId),
                 OrderType.stringToEnum(rs.getString(orderType)),
                 rs.getObject(endDate, OffsetDateTime.class)
         );
@@ -42,18 +41,17 @@ public class PostgresqlClientOrderRepo implements ClientOrderRepo {
 
         var sqlTemplate = MessageFormat.format("""
                 insert into {0}
-                ({1}, {2}, {3}, {4}, {5}, {6}, {7})
+                ({1}, {2}, {3}, {4}, {5}, {6})
                 values
-                (:{1}, :{2}, :{3}, :{4}, :{5}, :{6}, :{7}::timestamp)
+                (:{1}, :{2}, :{3}, :{4}, :{5}, :{6}::timestamp)
                 """, table,
-                id, clientId, title, description, serviceId, orderType, endDate);
+                id, clientId, title, description, orderType, endDate);
 
         var params = new MapSqlParameterSource()
                 .addValue(id, clientOrder.id())
                 .addValue(clientId, clientOrder.clientId())
                 .addValue(title, clientOrder.title())
                 .addValue(description, clientOrder.description())
-                .addValue(serviceId, clientOrder.serviceId())
                 .addValue(orderType, OrderType.enumToString(clientOrder.orderType()))
                 .addValue(endDate, clientOrder.endAt() != null ? new Timestamp(1000 * clientOrder.endAt().toEpochSecond()) : null);
 

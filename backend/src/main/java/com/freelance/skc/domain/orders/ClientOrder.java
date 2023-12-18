@@ -12,7 +12,6 @@ public record ClientOrder(
         @NotNull String clientId,
         @NotNull String title,
         @NotNull String description,
-        @NotNull String serviceId,
         @NotNull OrderType orderType,
         @Nullable OffsetDateTime endAt
 ) implements DomainInterface {
@@ -20,7 +19,6 @@ public record ClientOrder(
             @NotNull String clientId,
             @NotNull String title,
             @NotNull String description,
-            @NotNull String serviceId,
             @NotNull OrderType orderType,
             @Nullable OffsetDateTime endAt
     ) {
@@ -29,7 +27,6 @@ public record ClientOrder(
                 clientId,
                 title,
                 description,
-                serviceId,
                 orderType,
                 endAt
         );

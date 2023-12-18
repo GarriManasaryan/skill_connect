@@ -11,7 +11,6 @@ public record ClientOrderBackofficeModel(
         @NotNull String clientId,
         @NotNull String title,
         @NotNull String description,
-        @NotNull String serviceId,
         @NotNull OrderType orderType,
         @Nullable OffsetDateTime endAt
 ) {

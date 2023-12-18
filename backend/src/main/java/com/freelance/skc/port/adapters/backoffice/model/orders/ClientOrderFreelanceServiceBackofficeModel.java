@@ -6,11 +6,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.OffsetDateTime;
 
-public record ClientOrderCreationRequest(
-        @NotNull String clientId,
-        @NotNull String title,
-        @NotNull String description,
-        @NotNull String orderType,
-        @Nullable OffsetDateTime endAt
+public record ClientOrderFreelanceServiceBackofficeModel(
+        @NotNull String clientOrderId,
+        @NotNull String serviceId
 ) {
 }

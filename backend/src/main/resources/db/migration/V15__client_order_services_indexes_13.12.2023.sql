@@ -1,0 +1,3 @@
+create index client_order_id_i_client_order_services on sc_client_order_services (client_order_id);
+create index service_id_i_client_order_services on sc_client_order_services (service_id);
+create unique index client_order_id_service_id_ui_client_order_services on sc_client_order_services (client_order_id, service_id);

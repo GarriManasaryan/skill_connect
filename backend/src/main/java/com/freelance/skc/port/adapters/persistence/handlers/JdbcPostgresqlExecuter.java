@@ -23,11 +23,20 @@ public class JdbcPostgresqlExecuter implements JdbcPostgresExecuterRepo {
     }
 
     private static String psqlExceptionMessage(DataAccessException e) {
-        var exceptionMessage = "Unmapped SQL exception";
+        var exceptionMessage = "Unmapped DataAccessException";
         if (e.getCause() instanceof PSQLException sqlException) {
             // нужно всегда сужать тип ошибки до PSQLException и до getServerErrorMessage и тд, и только в конце конкретно, как внизу
-            if (sqlException.getServerErrorMessage() != null && sqlException.getServerErrorMessage().getMessage() != null && sqlException.getServerErrorMessage().getMessage().contains("violates foreign key")) {
-                exceptionMessage = "FK violation: " + sqlException.getServerErrorMessage().getMessage();
+            if (sqlException.getServerErrorMessage() != null && sqlException.getServerErrorMessage().getMessage() != null) {
+                var sqlMessage = sqlException.getServerErrorMessage().getMessage();
+                if (sqlException.getServerErrorMessage().getMessage().contains("violates foreign key")) {
+                    exceptionMessage = "FK violation: " + sqlMessage;
+                }
+                else if (sqlException.getServerErrorMessage().getMessage().contains("violates not-null constraint")) {
+                    exceptionMessage = "NullNotAllowed: " + sqlMessage;
+                }
+                else if (sqlException.getServerErrorMessage().getMessage().contains("duplicate key value violates unique constraint")) {
+                    exceptionMessage = "DuplicateKeyViolation: " + sqlMessage;
+                }
             }
         } else {
             exceptionMessage = "FK violation";
@@ -37,6 +46,7 @@ public class JdbcPostgresqlExecuter implements JdbcPostgresExecuterRepo {
 
 
     public void update(String sqlTemplate, MapSqlParameterSource params) {
+//        jdbcOperations.update(sqlTemplate, params);
         try {
             jdbcOperations.update(sqlTemplate, params);
         } catch (DataAccessException e) {

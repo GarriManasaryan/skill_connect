@@ -18,17 +18,23 @@ public class FreelanceServiceController {
         this.freelanceServiceService = freelanceServiceService;
     }
 
-    @PostMapping("/api/service")
+    @PostMapping("/api/services")
     public void save(@RequestBody @NotNull FreelanceServiceCreationRequest freelanceServiceCreationRequest) {
         freelanceServiceService.save(freelanceServiceCreationRequest);
     }
 
-    @DeleteMapping("/api/service/{id}")
+    @DeleteMapping("/api/services/{id}")
     public void delete(@PathVariable(name = "id", required = true) String id) {
         freelanceServiceService.delete(id);
     }
 
-    @GetMapping("/api/service")
+    @DeleteMapping("/api/services")
+    public void deleteAll() {
+        all().forEach((service) -> freelanceServiceService.delete(service.id()));
+    }
+
+
+    @GetMapping("/api/services")
     public List<FreelanceServiceBackofficeModel> all() {
         return freelanceServiceService.all();
     }

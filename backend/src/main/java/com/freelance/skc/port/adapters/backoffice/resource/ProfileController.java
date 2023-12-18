@@ -21,17 +21,17 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @PostMapping("/api/profile")
+    @PostMapping("/api/profiles")
     public void save(@RequestBody @NotNull ProfileCreationRequest profileCreationRequest) {
         profileService.save(profileCreationRequest);
     }
 
-    @DeleteMapping("/api/profile/{id}")
+    @DeleteMapping("/api/profiles/{id}")
     public void delete(@PathVariable(name = "id", required = true) String id) {
         profileService.delete(id);
     }
 
-    @GetMapping("/api/profile")
+    @GetMapping("/api/profiles")
     public List<ProfileBackofficeModel> all() {
         return profileService.all();
     }

@@ -20,20 +20,17 @@ import java.util.List;
 public class ClientOrderService {
 
     private final ClientOrderRepo clientOrderRepo;
-    private final FKChecker<FreelanceServiceRepo> fkServiceChecker;
     private final FKChecker<UserRepo> fkUserChecker;
     private final UserRepo userRepo;
     private final FreelanceServiceRepo freelanceServiceRepo;
 
     public ClientOrderService(
             ClientOrderRepo clientOrderRepo,
-            FKChecker<FreelanceServiceRepo> fkServiceChecker,
             FKChecker<UserRepo> fkUserChecker,
             UserRepo userRepo,
             FreelanceServiceRepo freelanceServiceRepo
     ) {
         this.clientOrderRepo = clientOrderRepo;
-        this.fkServiceChecker = fkServiceChecker;
         this.fkUserChecker = fkUserChecker;
         this.userRepo = userRepo;
         this.freelanceServiceRepo = freelanceServiceRepo;
@@ -41,7 +38,6 @@ public class ClientOrderService {
 
     public void save(ClientOrderCreationRequest clientOrderCreationRequest) {
         // validation
-        fkServiceChecker.validate(freelanceServiceRepo, clientOrderCreationRequest.serviceId(), "service not found");
         fkUserChecker.validate(userRepo, clientOrderCreationRequest.clientId(), "user not found");
 
         // save
@@ -49,7 +45,6 @@ public class ClientOrderService {
                 clientOrderCreationRequest.clientId(),
                 clientOrderCreationRequest.title(),
                 clientOrderCreationRequest.description(),
-                clientOrderCreationRequest.serviceId(),
                 OrderType.stringToEnum(clientOrderCreationRequest.orderType()),
                 clientOrderCreationRequest.endAt()
         ));
@@ -72,7 +67,6 @@ public class ClientOrderService {
                         order.clientId(),
                         order.title(),
                         order.description(),
-                        order.serviceId(),
                         order.orderType(),
                         order.endAt() != null ? order.endAt().atZoneSameInstant(ZoneId.of(userTimeZone)).toOffsetDateTime() : null
                 ))
