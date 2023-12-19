@@ -4,8 +4,8 @@ spring:
 
   datasource:
 #    driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://db_skill_connect_host:5433/db_skill_connect
-    url: jdbc:postgresql://localhost:5433/db_skill_connect
+    url: jdbc:postgresql://db_skill_connect_host:5433/db_skill_connect
+#    url: jdbc:postgresql://localhost:5433/db_skill_connect
     username: postgres
     password: 1
 

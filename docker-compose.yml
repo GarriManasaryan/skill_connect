@@ -28,19 +28,19 @@ services:
     ports:
       - "8080:8080"
 
-  rabbitmq:
-    image: rabbitmq:management
-    hostname: my-rabbit
-    depends_on:
-      - backend
-    restart: no
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    expose:
-      - "5672"
-    volumes:
-      - rbmq_data:/var/lib/rabbitmq/
+#  rabbitmq:
+#    image: rabbitmq:management
+#    hostname: my-rabbit
+#    depends_on:
+#      - backend
+#    restart: no
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    expose:
+#      - "5672"
+#    volumes:
+#      - rbmq_data:/var/lib/rabbitmq/
 
 #    networks:
 #      -

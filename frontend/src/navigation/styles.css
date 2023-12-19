@@ -1,16 +1,28 @@
 .logo{
-    /* background-color: white; */
-    width: 75px;
-    height: 75px;
+    width: 80px;
+    /* rotate: 90deg; */
+    /* background-color: #851a2f; */
+    height: 80px;
+    /* border-color: blue; */
     cursor: pointer;
+    /* -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 5px #222); */
     transition: all 0.4s ease 0s;
 }
 
 .logo:hover{
-    /* background-color: white; */
-    transform: rotate(360deg);
+    transform: rotate(90deg);
+    /* -webkit-filter: invert(1);
+    filter: invert(1); */
 }
 
-/* .ant-input-wrapper{
-    font-size: 70px;
+/* чересчур широко, поэтому оставим так, но и ширина не фиксируется */
+/* крче проще самому добавить поле, чем этой хней страдать */
+
+/* .ant-input-affix-wrapper{
+    height: 40px;
+}
+
+.ant-input-wrapper{
+    height: 40px;
 } */

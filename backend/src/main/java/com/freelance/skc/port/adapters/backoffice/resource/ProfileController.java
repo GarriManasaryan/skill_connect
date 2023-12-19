@@ -7,8 +7,13 @@ import com.freelance.skc.port.adapters.backoffice.model.profile.ProfileCreationR
 import com.freelance.skc.port.adapters.backoffice.model.service.FreelanceServiceBackofficeModel;
 import com.freelance.skc.port.adapters.backoffice.model.service.FreelanceServiceCreationRequest;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -35,5 +40,27 @@ public class ProfileController {
     public List<ProfileBackofficeModel> all() {
         return profileService.all();
     }
+
+    @GetMapping("/api/profiles/pic/{profile_id}")
+    public ResponseEntity<byte[]> getProfilePic(@PathVariable("profile_id") String id) {
+        var profile = profileService.ofId(id);
+
+        return profile
+                .map(prof ->
+                        ResponseEntity.ok()
+                                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + prof.title() + "\"")
+                                .contentType(MediaType.IMAGE_PNG)
+                                .body(prof.sellerPic()))
+                .orElse(null);
+    }
+
+    @PostMapping(value = "/api/profiles/pic")
+    public void savePic(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("profile_id") String id
+    ) throws IOException {
+        profileService.addPic(id, file);
+    }
+
 
 }

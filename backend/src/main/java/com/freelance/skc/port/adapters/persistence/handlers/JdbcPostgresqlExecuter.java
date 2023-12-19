@@ -1,6 +1,5 @@
 package com.freelance.skc.port.adapters.persistence.handlers;
 
-import com.freelance.skc.domain.orders.OrderApplication;
 import org.postgresql.util.PSQLException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class JdbcPostgresqlExecuter implements JdbcPostgresExecuterRepo {
@@ -24,6 +24,8 @@ public class JdbcPostgresqlExecuter implements JdbcPostgresExecuterRepo {
 
     private static String psqlExceptionMessage(DataAccessException e) {
         var exceptionMessage = "Unmapped DataAccessException";
+        var exceptionSourceMessage = e.getMessage();
+
         if (e.getCause() instanceof PSQLException sqlException) {
             // нужно всегда сужать тип ошибки до PSQLException и до getServerErrorMessage и тд, и только в конце конкретно, как внизу
             if (sqlException.getServerErrorMessage() != null && sqlException.getServerErrorMessage().getMessage() != null) {
@@ -37,9 +39,12 @@ public class JdbcPostgresqlExecuter implements JdbcPostgresExecuterRepo {
                 else if (sqlException.getServerErrorMessage().getMessage().contains("duplicate key value violates unique constraint")) {
                     exceptionMessage = "DuplicateKeyViolation: " + sqlMessage;
                 }
+                else if (sqlException.getServerErrorMessage().getMessage().contains("No value registered for")) {
+                    exceptionMessage = "MissingParam: " + sqlMessage;
+                }
             }
-        } else {
-            exceptionMessage = "FK violation";
+        } else if (exceptionSourceMessage.contains("No value registered for")) {
+            exceptionMessage = "MissingParam: " + exceptionSourceMessage;
         }
         return exceptionMessage;
     }
@@ -71,5 +76,15 @@ public class JdbcPostgresqlExecuter implements JdbcPostgresExecuterRepo {
         return jdbcOperations.query(sqlTemplate, new MapSqlParameterSource(), rowMapper);
     }
 
+    @Override
+    public <T> Optional<T> ofId(String tableName, String id, RowMapper<T> rowMapper) {
+        var sqlTemplate = String.format("""
+                select * from %s 
+                where id = :id""", tableName);
 
+        var params = new MapSqlParameterSource()
+                .addValue("id", id);
+
+        return jdbcOperations.query(sqlTemplate, params, rowMapper).stream().findFirst();
+    }
 }
