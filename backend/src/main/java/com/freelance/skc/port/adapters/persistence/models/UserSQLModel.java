@@ -7,11 +7,11 @@ public class UserSQLModel {
 
     public static final String table = "sc_users";
 
-    public static final String id = "id";
-    public static final String name = "name";
-    public static final String email = "email";
-    public static final String role = "role";
-    public static final String age = "age";
-    public static final String discriminator = "discriminator";
-    public static final String timeZone = "time_zone";
+    public static final String idCol = "id";
+    public static final String nameCol = "name";
+    public static final String emailCol = "email";
+    public static final String roleCol = "role";
+    public static final String ageCol = "age";
+    public static final String discriminatorCol = "discriminator";
+    public static final String timeZoneCol = "time_zone";
 }

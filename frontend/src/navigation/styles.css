@@ -16,13 +16,14 @@
     filter: invert(1); */
 }
 
-/* чересчур широко, поэтому оставим так, но и ширина не фиксируется */
-/* крче проще самому добавить поле, чем этой хней страдать */
-
-/* .ant-input-affix-wrapper{
-    height: 40px;
+/* span.ant-input-wrapper.ant-input-group{
+    height: 60px ;
+    width: 800px;
 }
-
-.ant-input-wrapper{
-    height: 40px;
+.ant-input-affix-wrapper{
+    height: 60px !important;
 } */
+
+.ant-select-selection-item{
+    width: 70px !important;
+}

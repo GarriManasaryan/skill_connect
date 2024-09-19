@@ -4,11 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.Callable;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 class SomeTest {
 
@@ -26,6 +27,14 @@ class SomeTest {
         };
         intCons.accept(5);
         consume(intCons, 5);
+//        Supplier
+//        BiConsumer
+//        Function
+        Map<String, Integer> nameMap = new HashMap<>();
+        nameMap.put("John44", 4);
+        Integer value = nameMap.computeIfAbsent("John", s -> s.length());
+
+        assert value == 5;
 
         assert true;
     }

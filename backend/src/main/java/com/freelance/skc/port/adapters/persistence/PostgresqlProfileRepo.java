@@ -26,11 +26,11 @@ public class PostgresqlProfileRepo implements ProfileRepo {
 
     private static RowMapper<Profile> asProfileRowMapper() {
         return (rs, rowNum) -> new Profile(
-                rs.getString(id),
-                rs.getString(title),
-                rs.getString(description),
-                rs.getBytes(sellerPic),
-                rs.getString(userId)
+                rs.getString(idCol),
+                rs.getString(titleCol),
+                rs.getString(descriptionCol),
+                rs.getBytes(sellerPicCol),
+                rs.getString(userIdCol)
         );
     }
 
@@ -42,14 +42,14 @@ public class PostgresqlProfileRepo implements ProfileRepo {
                 values
                 (:{1}, :{2}, :{3}, :{4}, :{5}::bytea)
                 """, table,
-                id, title, description, userId, sellerPic);
+                idCol, titleCol, descriptionCol, userIdCol, sellerPicCol);
 
         var params = new MapSqlParameterSource()
-                .addValue(id, profile.id())
-                .addValue(title, profile.title())
-                .addValue(description, profile.description())
-                .addValue(sellerPic, profile.sellerPic())
-                .addValue(userId, profile.userId());
+                .addValue(idCol, profile.id())
+                .addValue(titleCol, profile.title())
+                .addValue(descriptionCol, profile.description())
+                .addValue(sellerPicCol, profile.sellerPic())
+                .addValue(userIdCol, profile.userId());
 
         jdbcPostgresExecuterRepo.update(sqlTemplate, params);
 
@@ -77,13 +77,45 @@ public class PostgresqlProfileRepo implements ProfileRepo {
                 set {2} = :{2}::bytea
                 where {1} = :{1}
                 """, table,
-                id, sellerPic);
+                idCol, sellerPicCol);
 
         var params = new MapSqlParameterSource()
-                .addValue(sellerPic, file.getBytes())
-                .addValue(id, profileId);
+                .addValue(sellerPicCol, file.getBytes())
+                .addValue(idCol, profileId);
 
         jdbcPostgresExecuterRepo.update(sqlTemplate, params);
 
+    }
+
+    @Override
+    public void patchDescription(String profileId, String description) {
+        var sqlTemplate = MessageFormat.format("""
+                update {0}
+                set {2} = :{2}
+                where {1} = :{1}
+                """, table,
+                idCol, descriptionCol);
+
+        var params = new MapSqlParameterSource()
+                .addValue(descriptionCol, description)
+                .addValue(idCol, profileId);
+
+        jdbcPostgresExecuterRepo.update(sqlTemplate, params);
+    }
+
+    @Override
+    public void patchTitle(String profileId, String title) {
+        var sqlTemplate = MessageFormat.format("""
+                update {0}
+                set {2} = :{2}
+                where {1} = :{1}
+                """, table,
+                idCol, titleCol);
+
+        var params = new MapSqlParameterSource()
+                .addValue(titleCol, title)
+                .addValue(idCol, profileId);
+
+        jdbcPostgresExecuterRepo.update(sqlTemplate, params);
     }
 }

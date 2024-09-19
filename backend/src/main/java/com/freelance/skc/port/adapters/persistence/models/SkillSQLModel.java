@@ -7,8 +7,8 @@ public class SkillSQLModel {
 
     public static final String table = "sc_skills";
 
-    public static final String id = "id";
-    public static final String name = "name";
-    public static final String description = "description";
-    public static final String parentId = "parent_id";
+    public static final String idCol = "id";
+    public static final String nameCol = "name";
+    public static final String descriptionCol = "description";
+    public static final String parentIdCol = "parent_id";
 }

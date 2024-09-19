@@ -7,9 +7,9 @@ public class ProfileSQLModel {
 
     public static final String table = "sc_profiles";
 
-    public static final String id = "id";
-    public static final String title = "title";
-    public static final String description = "description";
-    public static final String sellerPic = "profile_seller_pic";
-    public static final String userId = "user_id";
+    public static final String idCol = "id";
+    public static final String titleCol = "title";
+    public static final String descriptionCol = "description";
+    public static final String sellerPicCol = "profile_seller_pic";
+    public static final String userIdCol = "user_id";
 }

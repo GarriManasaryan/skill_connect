@@ -19,4 +19,9 @@ public interface ProfileRepo extends DomainRepoInterface<Profile> {
     Optional<Profile> ofId(String id);
 
     void addPic(String profileId, MultipartFile file) throws IOException;
+
+    void patchDescription(String profileId, String description);
+
+    void patchTitle(String profileId, String title);
+
 }

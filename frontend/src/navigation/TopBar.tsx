@@ -66,9 +66,11 @@ function TopBar() {
             fontSize: '20px', 
             paddingLeft: '2rem'
           }}
+          size='middle'
           onSearch={onSearch}
           placeholder="Search"
           addonBefore={searchOptions}
+          className='addonClass'
           // addonAfter={<SearchOutlined/>}
           allowClear
           // defaultValue="mysite" 

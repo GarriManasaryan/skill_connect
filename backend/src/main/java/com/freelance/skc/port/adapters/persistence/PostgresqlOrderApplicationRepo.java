@@ -29,12 +29,12 @@ public class PostgresqlOrderApplicationRepo implements OrderApplicationRepo {
 
     private static RowMapper<OrderApplication> asOrderApplicationRowMapping() {
         return (rs, rowNum) -> new OrderApplication(
-                rs.getString(id),
-                rs.getString(profileId),
-                OrderApplicationStatus.valueOf(rs.getString(status)),
-                rs.getObject(appliedAt, OffsetDateTime.class),
-                rs.getString(applicationText),
-                rs.getString(clientOrderId)
+                rs.getString(idCol),
+                rs.getString(profileIdCol),
+                OrderApplicationStatus.valueOf(rs.getString(statusCol)),
+                rs.getObject(appliedAtCol, OffsetDateTime.class),
+                rs.getString(applicationTextCol),
+                rs.getString(clientOrderIdCol)
         );
     }
 
@@ -46,15 +46,15 @@ public class PostgresqlOrderApplicationRepo implements OrderApplicationRepo {
                 values
                 (:{1}, :{2}, :{3}, :{4}::timestamp, :{5}, :{6})
                 """, table,
-                id, profileId, status, appliedAt, applicationText, clientOrderId);
+                idCol, profileIdCol, statusCol, appliedAtCol, applicationTextCol, clientOrderIdCol);
 
         var params = new MapSqlParameterSource()
-                .addValue(id, orderApplication.id())
-                .addValue(profileId, orderApplication.profileId())
-                .addValue(status, orderApplication.orderApplicationStatus().name())
-                .addValue(appliedAt, new Timestamp(1000 * orderApplication.appliedAt().toEpochSecond()))
-                .addValue(applicationText, orderApplication.applicationText())
-                .addValue(clientOrderId, orderApplication.clientOrderId());
+                .addValue(idCol, orderApplication.id())
+                .addValue(profileIdCol, orderApplication.profileId())
+                .addValue(statusCol, orderApplication.orderApplicationStatus().name())
+                .addValue(appliedAtCol, new Timestamp(1000 * orderApplication.appliedAt().toEpochSecond()))
+                .addValue(applicationTextCol, orderApplication.applicationText())
+                .addValue(clientOrderIdCol, orderApplication.clientOrderId());
 
         jdbcPostgresExecuterRepo.update(sqlTemplate, params);
 

@@ -24,10 +24,10 @@ public class PostgresqlFreelanceServiceRepo implements FreelanceServiceRepo {
 
     private static RowMapper<FreelanceService> asFreelanceServiceRowMapper() {
         return (rs, rowNum) -> new FreelanceService(
-                rs.getString(id),
-                rs.getString(name),
-                rs.getString(description),
-                rs.getString(parentId)
+                rs.getString(idCol),
+                rs.getString(nameCol),
+                rs.getString(descriptionCol),
+                rs.getString(parentIdCol)
         );
     }
 
@@ -39,13 +39,13 @@ public class PostgresqlFreelanceServiceRepo implements FreelanceServiceRepo {
                 values
                 (:{1}, :{2}, :{3}, :{4})
                 """, table,
-                id, name, description, parentId);
+                idCol, nameCol, descriptionCol, parentIdCol);
 
         var params = new MapSqlParameterSource()
-                .addValue(id, freelanceService.id())
-                .addValue(name, freelanceService.name())
-                .addValue(description, freelanceService.description())
-                .addValue(parentId, freelanceService.parentId());
+                .addValue(idCol, freelanceService.id())
+                .addValue(nameCol, freelanceService.name())
+                .addValue(descriptionCol, freelanceService.description())
+                .addValue(parentIdCol, freelanceService.parentId());
 
         jdbcPostgresExecuterRepo.update(sqlTemplate, params);
 

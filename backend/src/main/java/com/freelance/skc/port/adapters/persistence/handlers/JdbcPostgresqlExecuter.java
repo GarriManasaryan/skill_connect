@@ -46,7 +46,7 @@ public class JdbcPostgresqlExecuter implements JdbcPostgresExecuterRepo {
         } else if (exceptionSourceMessage.contains("No value registered for")) {
             exceptionMessage = "MissingParam: " + exceptionSourceMessage;
         }
-        return exceptionMessage;
+        return exceptionMessage + ": " + exceptionSourceMessage;
     }
 
 

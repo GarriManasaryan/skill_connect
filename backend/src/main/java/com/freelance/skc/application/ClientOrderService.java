@@ -16,7 +16,6 @@ import java.time.ZoneId;
 import java.util.List;
 
 @Service
-@Transactional
 public class ClientOrderService {
 
     private final ClientOrderRepo clientOrderRepo;

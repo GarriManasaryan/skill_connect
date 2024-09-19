@@ -24,13 +24,13 @@ public class PostgresqlUserRepo implements UserRepo {
 
     private static RowMapper<User> asUserRowMapper(){
         return (rs, rowNum) -> new User(
-                rs.getString(id),
-                rs.getString(name),
-                rs.getString(email),
-                Role.valueOf(rs.getString(role)),
-                rs.getInt(age),
-                UserDiscriminator.valueOf(rs.getString(discriminator)),
-                rs.getString(timeZone)
+                rs.getString(idCol),
+                rs.getString(nameCol),
+                rs.getString(emailCol),
+                Role.valueOf(rs.getString(roleCol)),
+                rs.getInt(ageCol),
+                UserDiscriminator.valueOf(rs.getString(discriminatorCol)),
+                rs.getString(timeZoneCol)
         );
     }
 
@@ -42,16 +42,16 @@ public class PostgresqlUserRepo implements UserRepo {
                 values
                 (:{1}, :{2}, :{3}, :{4}, :{5}, :{6}, :{7})
                 """, table,
-                id, name, email, role, age, discriminator, timeZone);
+                idCol, nameCol, emailCol, roleCol, ageCol, discriminatorCol, timeZoneCol);
 
         var params = new MapSqlParameterSource()
-                .addValue(id, user.id())
-                .addValue(name, user.name())
-                .addValue(email, user.email())
-                .addValue(role, user.role().name())
-                .addValue(age, user.age())
-                .addValue(discriminator, user.discriminator().name())
-                .addValue(timeZone, user.timeZone());
+                .addValue(idCol, user.id())
+                .addValue(nameCol, user.name())
+                .addValue(emailCol, user.email())
+                .addValue(roleCol, user.role().name())
+                .addValue(ageCol, user.age())
+                .addValue(discriminatorCol, user.discriminator().name())
+                .addValue(timeZoneCol, user.timeZone());
 
         jdbcPostgresExecuterRepo.update(sqlTemplate, params);
 
@@ -59,12 +59,13 @@ public class PostgresqlUserRepo implements UserRepo {
 
     @Override
     public void delete(String userId) {
-        jdbcPostgresExecuterRepo.delete(table, id);
+        jdbcPostgresExecuterRepo.delete(table, idCol);
 
     }
 
     @Override
     public List<User> all() {
+        var asc = jdbcPostgresExecuterRepo.all(table, asUserRowMapper());
         return jdbcPostgresExecuterRepo.all(table, asUserRowMapper());
     }
 }

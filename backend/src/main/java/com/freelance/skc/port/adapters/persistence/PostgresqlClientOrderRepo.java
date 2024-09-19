@@ -27,12 +27,12 @@ public class PostgresqlClientOrderRepo implements ClientOrderRepo {
 
     private static RowMapper<ClientOrder> asClientOrderRowMapping() {
         return (rs, rowNum) -> new ClientOrder(
-                rs.getString(id),
-                rs.getString(clientId),
-                rs.getString(title),
-                rs.getString(description),
-                OrderType.stringToEnum(rs.getString(orderType)),
-                rs.getObject(endDate, OffsetDateTime.class)
+                rs.getString(idCol),
+                rs.getString(clientIdCol),
+                rs.getString(titleCol),
+                rs.getString(descriptionCol),
+                OrderType.stringToEnum(rs.getString(orderTypeCol)),
+                rs.getObject(endDateCol, OffsetDateTime.class)
         );
     }
 
@@ -45,15 +45,15 @@ public class PostgresqlClientOrderRepo implements ClientOrderRepo {
                 values
                 (:{1}, :{2}, :{3}, :{4}, :{5}, :{6}::timestamp)
                 """, table,
-                id, clientId, title, description, orderType, endDate);
+                idCol, clientIdCol, titleCol, descriptionCol, orderTypeCol, endDateCol);
 
         var params = new MapSqlParameterSource()
-                .addValue(id, clientOrder.id())
-                .addValue(clientId, clientOrder.clientId())
-                .addValue(title, clientOrder.title())
-                .addValue(description, clientOrder.description())
-                .addValue(orderType, OrderType.enumToString(clientOrder.orderType()))
-                .addValue(endDate, clientOrder.endAt() != null ? new Timestamp(1000 * clientOrder.endAt().toEpochSecond()) : null);
+                .addValue(idCol, clientOrder.id())
+                .addValue(clientIdCol, clientOrder.clientId())
+                .addValue(titleCol, clientOrder.title())
+                .addValue(descriptionCol, clientOrder.description())
+                .addValue(orderTypeCol, OrderType.enumToString(clientOrder.orderType()))
+                .addValue(endDateCol, clientOrder.endAt() != null ? new Timestamp(1000 * clientOrder.endAt().toEpochSecond()) : null);
 
         jdbcPostgresExecuterRepo.update(sqlTemplate, params);
 

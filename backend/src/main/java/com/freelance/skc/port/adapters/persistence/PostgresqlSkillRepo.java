@@ -24,10 +24,10 @@ public class PostgresqlSkillRepo implements SkillRepo {
 
     private static RowMapper<Skill> asSkillRowMapper() {
         return (rs, rowNum) -> new Skill(
-                rs.getString(id),
-                rs.getString(name),
-                rs.getString(description),
-                rs.getString(parentId)
+                rs.getString(idCol),
+                rs.getString(nameCol),
+                rs.getString(descriptionCol),
+                rs.getString(parentIdCol)
         );
     }
 
@@ -39,13 +39,13 @@ public class PostgresqlSkillRepo implements SkillRepo {
                 values
                 (:{1}, :{2}, :{3}, :{4})
                 """, table,
-                id, name, description, parentId);
+                idCol, nameCol, descriptionCol, parentIdCol);
 
         var params = new MapSqlParameterSource()
-                .addValue(id, skill.id())
-                .addValue(name, skill.name())
-                .addValue(description, skill.description())
-                .addValue(parentId, skill.parentId());
+                .addValue(idCol, skill.id())
+                .addValue(nameCol, skill.name())
+                .addValue(descriptionCol, skill.description())
+                .addValue(parentIdCol, skill.parentId());
 
         jdbcPostgresExecuterRepo.update(sqlTemplate, params);
 

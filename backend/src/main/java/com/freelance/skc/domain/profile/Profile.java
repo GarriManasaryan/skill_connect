@@ -5,6 +5,8 @@ import com.freelance.skc.application.validators.DomainInterface;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Supplier;
+
 public record Profile(
         @NotNull String id,
         @NotNull String title,
@@ -25,5 +27,9 @@ public record Profile(
                 sellerPic,
                 userId
         );
+    }
+
+    public Supplier<String> acs (){
+        return () -> this.description + "offset что-то там именно в момент вызова, поэтому не просто стринг";
     }
 }
