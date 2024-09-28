@@ -7,9 +7,22 @@ plugins {
 group = 'com.freelance'
 version = '0.0.1-SNAPSHOT'
 
+
 java {
 	sourceCompatibility = '17'
 }
+
+//tasks.withType(JavaCompile).configureEach {
+//	options.compilerArgs += "--enable-preview"
+//}
+//
+//tasks.withType(Test).configureEach {
+//	jvmArgs += "--enable-preview"
+//}
+//
+//tasks.withType(JavaExec).configureEach {
+//	jvmArgs += "--enable-preview"
+//}
 
 repositories {
 	mavenCentral()
@@ -28,6 +41,7 @@ dependencies {
 	compileOnly 'org.jetbrains:annotations:23.0.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
 	runtimeOnly 'org.flywaydb:flyway-core'
 	implementation 'org.postgresql:postgresql'

@@ -1,35 +1,33 @@
 package com.freelance.skc.domain.profile;
 
-import com.freelance.skc.application.IdGenerator;
-import com.freelance.skc.application.validators.DomainInterface;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.freelance.skc.application.common.IdGenerator;
+import jakarta.validation.constraints.NotNull;
 
-import java.util.function.Supplier;
+import java.util.List;
 
 public record Profile(
         @NotNull String id,
         @NotNull String title,
         @NotNull String description,
-        byte[] sellerPic,
-        @NotNull String userId
-) implements DomainInterface {
+        @NotNull String userId,
+        @NotNull List<String> skillIds,
+        @NotNull List<String> serviceIds
+) implements ProfileBase {
     public static Profile of(
             @NotNull String title,
             @NotNull String description,
-            byte[] sellerPic,
-            @NotNull String userId
+            @NotNull String userId,
+            @NotNull List<String> skillIds,
+            @NotNull List<String> serviceIds
     ) {
         return new Profile(
                 IdGenerator.generate("prf"),
                 title,
                 description,
-                sellerPic,
-                userId
+                userId,
+                skillIds,
+                serviceIds
         );
     }
 
-    public Supplier<String> acs (){
-        return () -> this.description + "offset что-то там именно в момент вызова, поэтому не просто стринг";
-    }
 }

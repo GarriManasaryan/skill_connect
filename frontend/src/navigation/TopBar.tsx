@@ -43,8 +43,7 @@ function TopBar() {
   return (
 
     <>
-      <div
-        style={{
+      <div style={{
           position: 'sticky',
           top: 0,
           zIndex: 1,
@@ -52,8 +51,7 @@ function TopBar() {
           display: 'flex',
           alignItems: 'center',
           // backgroundColor: '#d5e2ff'
-        }}
-        >
+        }}>
         <Link 
           style={{padding: '0.5rem 0 0.5rem 30rem'}}
           className="logo-link" to='/image'

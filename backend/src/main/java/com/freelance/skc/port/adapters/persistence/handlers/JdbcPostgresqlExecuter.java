@@ -1,5 +1,6 @@
 package com.freelance.skc.port.adapters.persistence.handlers;
 
+import com.freelance.skc.port.adapters.persistence.models.common.BaseListSQLModel;
 import org.postgresql.util.PSQLException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,6 +10,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +54,6 @@ public class JdbcPostgresqlExecuter implements JdbcPostgresExecuterRepo {
 
 
     public void update(String sqlTemplate, MapSqlParameterSource params) {
-//        jdbcOperations.update(sqlTemplate, params);
         try {
             jdbcOperations.update(sqlTemplate, params);
         } catch (DataAccessException e) {
@@ -86,5 +88,33 @@ public class JdbcPostgresqlExecuter implements JdbcPostgresExecuterRepo {
                 .addValue("id", id);
 
         return jdbcOperations.query(sqlTemplate, params, rowMapper).stream().findFirst();
+    }
+
+    @Override
+    public <T extends BaseListSQLModel> void updateEntityListValues(String entityId, List<String> valuesToAdd, T baseListSQLModel) {
+        if (!valuesToAdd.isEmpty()){
+            var sqlTemplateBase = MessageFormat.format("""
+                    insert into {0}
+                    ({1}, {2})
+                    values 
+                    """, baseListSQLModel.table(), baseListSQLModel.mainIdCol(), baseListSQLModel.valuesIdCol());
+
+            List<String> values = new ArrayList<>();
+            valuesToAdd.forEach(
+                    valueToLink -> values.add(String.format("('%s', '%s')", entityId, valueToLink))
+            );
+
+            jdbcOperations.update(sqlTemplateBase + String.join(", ", values), new MapSqlParameterSource());
+        }
+    }
+
+    @Override
+    public <T> List<T> customQuery(String sqlTemplate, MapSqlParameterSource params, RowMapper<T> rowMapper) {
+        return jdbcOperations.query(sqlTemplate, params, rowMapper);
+    }
+
+    @Override
+    public <T> List<T> customQuery(String sqlTemplate, RowMapper<T> rowMapper) {
+        return jdbcOperations.query(sqlTemplate, new MapSqlParameterSource(), rowMapper);
     }
 }

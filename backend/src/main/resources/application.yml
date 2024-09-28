@@ -3,10 +3,13 @@ spring:
     name: skill-connect
 
   datasource:
-    url: jdbc:postgresql://db_skill_connect_host:5433/db_skill_connect
-#    url: jdbc:postgresql://localhost:5433/db_skill_connect
+#    url: jdbc:postgresql://db_skill_connect_host:5433/db_skill_connect
+    url: jdbc:postgresql://localhost:5433/db_skill_connect
     username: postgres
     password: 1
+
+    backend:
+      uri: http://localhost:8080
 
   flyway:
     baselineOnMigrate: true

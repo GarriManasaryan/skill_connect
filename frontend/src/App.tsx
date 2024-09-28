@@ -14,45 +14,11 @@ function App() {
       <Router>
 
         <TopBar/>
-        <Layout 
-          style={{padding:'0 0 0 0'}}
-        
-        >
-          {/* <Header
-            style={{
-              position: 'sticky',
-              top: 0,
-              zIndex: 1,
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-            >
-            <Menu
-              theme="light"
-              mode="horizontal"
-              defaultSelectedKeys={['2']}
-              items={new Array(3).fill(null).map((_, index) => ({
-                key: String(index + 1),
-                label: `nav ${index + 1}`,
-              }))}
-            />
-          </Header> */}
-          <Content className="site-layout" style={{ padding: '0 50px' }}>
-            {/* <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb> */}
-            <Routes>
-              <Route path="/profiles" element={<Profiles/>}></Route>
-              {/* <Route path="/test_processing/:id" element={<StartTest/>}></Route> */}
-            </Routes>
-          </Content>
-        </Layout>
+        <Routes>
+          <Route path="/profiles" element={<Profiles/>}></Route>
+        </Routes>
 
       </Router>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
     </div>
   );
 }

@@ -1,10 +1,8 @@
 package com.freelance.skc.domain.user;
 
-import com.freelance.skc.application.IdGenerator;
-import com.freelance.skc.application.validators.DomainInterface;
-import org.jetbrains.annotations.NotNull;
-
-import java.time.OffsetDateTime;
+import com.freelance.skc.application.common.IdGenerator;
+import com.freelance.skc.application.common.validators.DomainInterface;
+import jakarta.validation.constraints.NotNull;
 
 public record User(
         @NotNull String id,

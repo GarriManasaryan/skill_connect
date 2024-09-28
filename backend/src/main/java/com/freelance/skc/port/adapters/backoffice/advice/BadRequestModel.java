@@ -1,6 +1,6 @@
 package com.freelance.skc.port.adapters.backoffice.advice;
 
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public record BadRequestModel(
         @NotNull String message

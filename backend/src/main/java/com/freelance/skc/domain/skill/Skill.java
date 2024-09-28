@@ -1,8 +1,8 @@
 package com.freelance.skc.domain.skill;
 
-import com.freelance.skc.application.IdGenerator;
-import com.freelance.skc.application.validators.DomainInterface;
-import org.jetbrains.annotations.NotNull;
+import com.freelance.skc.application.common.IdGenerator;
+import com.freelance.skc.application.common.validators.DomainInterface;
+import jakarta.validation.constraints.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public record Skill(
