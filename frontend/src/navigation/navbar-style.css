@@ -1,23 +1,45 @@
 .navbar-container {
     display: flex;
     /* именно image использовать, чтобы и градиент накладывался, и просто цвет */
-    background-color: var(--background-color);
+    /* background-color: var(--bg-color); */
+    background-image: var(--bg-image);
+
     /* background-image: linear-gradient(to left, rgb(255, 255, 255), rgb(255, 251, 194), rgb(255, 248, 152), rgb(255, 219, 99), rgb(255, 208, 52)); */
     /* background-image: linear-gradient(to left, rgb(255, 255, 255), rgb(230, 236, 255), rgb(193, 207, 255), rgb(121, 152, 255)); */
     /* background-image: linear-gradient(to left, rgb(255, 255, 255), rgb(230, 236, 255)); */
+
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /* margin: 1rem 5rem 1rem 5rem; */
-    padding: 0 1rem 0 1rem;
-    position: sticky;
+    padding: 0 1rem;
     top: 0;
-    /* border-radius: 3.5rem;
-    border-color: rgba(0, 0, 0, 0.409);
-    border-width: 1px;
-    border-style: solid; */
     z-index: 1;
+    height: var(--nav-height);
+    /* если это оставить, то mega menu не будет отображаться */
+    /* overflow: hidden; */
+}
+
+/* Mobile view: fixed to the bottom */
+@media (max-width: 768px) {
+
+    .navbar-container {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        height: var(--nav-height);
+        padding: 0 1rem;
+    }
+
+    .caret-icon {
+        display: none;
+    }
+
+    .base-nav-section-name {
+        display: none;
+    }
+
 }
 
 .navbar-left {

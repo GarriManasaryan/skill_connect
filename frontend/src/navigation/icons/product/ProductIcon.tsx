@@ -3,18 +3,18 @@ import path from 'path'
 import React from 'react'
 import IconProps from '../common/IconProps';
 
-function ProductIcon({ hovered }: IconProps) {
+function ProductIcon({ hovered, isActive }: IconProps) {
   const pathStyle = {
     transition: 'var(--transition)',
     strokeDasharray: 50, // Adjust based on path length for full coverage
-    strokeDashoffset: hovered ? 0 : 50, // Full offset when not hovered, 0 when hovered
+    strokeDashoffset: hovered || isActive ? 0 : 50, // Full offset when not hovered, 0 when hovered
   };
   
   return (
-    <svg className="feather feather-gift" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+    <svg className="feather feather-gift" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
       height='26'
       width='26'
-      stroke={hovered ? "var(--text-hovered-color)" : "var(--text-color)"}
+      stroke={hovered || isActive ? "var(--text-hovered-color)" : "var(--text-color)"}
       style={{
         transition: 'var(--transition)',
       }}

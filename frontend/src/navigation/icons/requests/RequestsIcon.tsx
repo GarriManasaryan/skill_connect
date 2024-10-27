@@ -2,17 +2,17 @@ import path from 'path'
 import React from 'react'
 import IconProps from '../common/IconProps'
 
-function RequestsIcon({ hovered }: IconProps) {
+function RequestsIcon({ hovered, isActive }: IconProps) {
 
     const pathStyle = {
         transition: 'var(--transition)',
         strokeDasharray: 50, // Adjust based on path length for full coverage
-        strokeDashoffset: hovered ? 0 : 50, // Full offset when not hovered, 0 when hovered
+        strokeDashoffset: hovered || isActive ? 0 : 50, // Full offset when not hovered, 0 when hovered
       };
 
     return (
-        <svg className="feather feather-file-text" fill="none" height="24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"
-        stroke={hovered ? "var(--text-hovered-color)" : "var(--text-color)"}
+        <svg className="feather feather-file-text" fill="none" height="24" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"
+        stroke={hovered || isActive ? "var(--text-hovered-color)" : "var(--text-color)"}
         style={{transition: 'var(--transition)'}}
         >
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
