@@ -17,6 +17,7 @@ public class BaseService<
         B extends BaseBackofficeModel,
         C extends BaseCreationRequest,
         U extends BaseUpdateRequest,
+        // то, что однознанчо определяется другими, не нужно еше раз передавать, моджно внизу DomainRepoInterface<D>
         R extends DomainRepoInterface<D>,
         M extends DomainMapper<D, B, C, U>
     > {

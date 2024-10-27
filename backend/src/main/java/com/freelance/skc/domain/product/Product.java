@@ -40,4 +40,25 @@ public record Product(
         );
     }
 
+    public Product update(
+            @NotNull String name,
+            @Nullable String description,
+            @NotNull Price price,
+            @NotNull String masterId,
+            @NotNull List<String> categoryIds,
+            @NotNull List<String> featureIds
+    ){
+        return new Product(
+                this.id,
+                name,
+                Optional.ofNullable(description),
+                price,
+                masterId,
+                categoryIds,
+                featureIds
+        );
+    }
+
+
+
 }

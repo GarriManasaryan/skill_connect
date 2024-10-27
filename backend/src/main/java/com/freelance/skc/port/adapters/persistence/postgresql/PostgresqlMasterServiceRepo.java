@@ -3,6 +3,7 @@ package com.freelance.skc.port.adapters.persistence.postgresql;
 import com.freelance.skc.domain.service.MasterService;
 import com.freelance.skc.domain.service.MasterServiceRepo;
 import com.freelance.skc.port.adapters.persistence.handlers.JdbcPostgresExecuterRepo;
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
