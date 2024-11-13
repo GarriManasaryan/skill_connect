@@ -4,16 +4,19 @@ body {
   /* background-color: rgb(4, 3, 21); */
   /* background-image: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 251, 194), rgb(255, 248, 152), rgb(255, 219, 99), rgb(255, 208, 52)); */
   /* background-image: linear-gradient(to right, rgb(225, 225, 225), rgb(205, 205, 205), rgb(176, 176, 176), rgb(167, 167, 167)); */
-  background: 
+  
+  /* градиент неплохой, но надо темнее */
+  /* background: 
     radial-gradient(
-      circle at top left, rgba(6, 6, 30, 0.973), rgba(6, 18, 30, 0.973),  rgba(10, 13, 52, 0.973),  rgba(17, 85, 82, 0.0973) 50%
+      circle at top left, rgba(6, 6, 30, 0.973), rgba(6, 18, 30, 0.973),  rgba(7, 9, 36, 0.973),  rgba(17, 85, 82, 0.0973) 50%
     ),
     radial-gradient(
-      circle at bottom right, rgba(6, 6, 27, 0.296), rgba(29, 16, 91, 0.734), rgba(12, 19, 61, 0.724), rgba(15, 24, 77, 0.672), rgba(32, 11, 58, 0.072) 64%
+      circle at bottom right, rgba(6, 6, 27, 0.296), rgba(20, 11, 65, 0.734), rgba(9, 15, 50, 0.724), rgba(11, 18, 54, 0.672), rgba(20, 11, 58, 0.072) 64%
     ),
     radial-gradient(
-      circle at top right, rgba(6, 6, 27, 0.163), rgba(29, 16, 91, 0.406), rgba(12, 19, 61, 0.724), rgba(14, 7, 34, 0.235), rgba(32, 11, 58, 0.072) 34%
-    );
+      circle at top right, rgba(6, 6, 27, 0.163), rgba(19, 11, 62, 0.406), rgba(9, 14, 47, 0.724), rgba(7, 11, 34, 0.235), rgba(32, 11, 58, 0.072) 34%
+    ); */
+
 
       /* background: radial-gradient(
         circle at top left,
@@ -48,19 +51,81 @@ code {
 }
 
 [data-theme="light"]{
-  --bg-color: white;
-  --text-hovered-color: rgb(57, 25, 160);
+  --bg-color: rgba(222, 222, 222, 0.593);
+  --bg-navbar: white;
+  --bg-image: radial-gradient(
+    circle at top right, 
+    rgb(255, 255, 255),
+    rgb(233, 255, 246),
+    rgb(222, 239, 255), 
+    rgb(255, 242, 255),
+    rgb(255, 255, 255)
+    )
+    ;
+  --bg-hovered-color: rgba(236, 246, 255, 0.784);
+  --bg-color-level1: rgba(249, 253, 255, 0.814);
+  --bg-img-nav: linear-gradient(
+    rgba(255, 255, 255, 0.955),
+    rgba(255, 255, 255, 0.955)
+  );
+  --text-hovered-color: rgb(31, 86, 169);
   --text-color: rgb(73, 73, 73);
-  --transition: all 0.3s ease-in-out;
+  --border-color: var(--text-hovered-color);
+  --transition: all 0.85s ease-in-out;
 }
 
 [data-theme="dark"] {
-  --bg-color: black;
-  /* --bg-image: radial-gradient(circle at top right, rgb(6, 14, 23),rgb(87, 20, 81), rgb(11, 25, 41), rgb(24, 54, 88), rgb(25, 96, 92), rgb(6, 14, 23)); */
-  /* --bg-image: linear-gradient(to right, rgb(18, 5, 22), rgb(52, 14, 63), rgb(76, 18, 64), rgb(24, 83, 105), rgb(17, 30, 76), rgb(18, 5, 22)); */
-  /* --bg-image: linear-gradient(to right, rgb(18, 5, 22), rgb(18, 5, 22)); */
-  --text-hovered-color: rgb(240, 224, 81);
-  --text-color: white;
-  --transition: all 0.3s ease-in-out;
-}
+  --bg-color: rgb(6, 6, 6);
+  --bg-navbar: rgb(4, 11, 26);
+  --bg-color-level1: rgb(15, 15, 15);
+  --bg-hovered-color: rgb(6, 35, 69);
+  --border-color: white;
+  --bg-image: radial-gradient(
+    circle at top right, 
+    rgb(6, 14, 23),
+    rgb(34, 11, 40),
+    rgb(15, 38, 56), 
+    rgb(8, 30, 28),
+    rgb(6, 14, 23)
+    )
+    ;
+  /* --bg-image: radial-gradient(
+    circle at top right, 
+    rgb(6, 14, 23),
+    rgb(14, 44, 51), 
+    rgb(6, 14, 23)
+    )
+    ; */
+    --text-hovered-color: rgb(255, 255, 255);
+    --text-color: rgb(173, 173, 173);
+    --transition: all 0.3s ease-in-out;
+  }
+  
+  
+  /* [data-theme="dark"] {
+    --bg-color: rgb(2, 10, 16);
+    --bg-color-level1: rgba(4, 19, 31, 0.518);
+    --bg-hovered-color: rgb(199, 223, 255);
+    --bg-image: radial-gradient(
+      circle at top right, 
+      rgb(6, 14, 23),
+      rgb(53, 12, 49), 
+      rgb(11, 25, 41), 
+      rgb(24, 54, 88), 
+      rgb(17, 67, 64), 
+      rgb(6, 14, 23))
+      ;
+      --text-hovered-color: rgb(2, 8, 18);
+      --text-color: rgb(184, 184, 184);
+      --transition: all 0.3s ease-in-out;
+    } */
+    
+    /* --bg-image: linear-gradient(to right, rgb(18, 5, 22), rgb(52, 14, 63), rgb(76, 18, 64), rgb(24, 83, 105), rgb(17, 30, 76), rgb(18, 5, 22)); */
 
+
+    /* --bg-img-nav: radial-gradient(
+      circle at top right, 
+      rgba(4, 21, 34, 0.88),
+      rgba(4, 21, 34, 0.88),
+      rgba(4, 21, 34, 0.88)
+  ); */

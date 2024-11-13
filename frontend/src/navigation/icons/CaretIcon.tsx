@@ -9,7 +9,7 @@ function CaretIcon({ hovered, isActive }: IconProps) {
     stroke={hovered || isActive ? "var(--text-hovered-color)" : "var(--text-color)"}
       style={{
         marginLeft: '2px',
-        transform: hovered || isActive ? 'rotate(180deg)' : 'rotate(0deg)',
+        transform: hovered || isActive ? 'rotate(0deg)' : 'rotate(180deg)',
         transition: 'var(--transition)',
         fontFamily: 'Cantarell',
       }}

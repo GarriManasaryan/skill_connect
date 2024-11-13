@@ -1,13 +1,32 @@
-@keyframes dropdownAppear {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-}
+/* @keyframes dropdownAppear {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+} */
 
 .mega-menu {
-    animation: dropdownAppear 0.3s ease-in-out;
+  display: none;
+  transition: var(--transition);
+  /* animation: dropdownAppear 0.8s ease-in-out; */
+}
+
+.base-nav-element:hover + .mega-menu {
+  display: block; 
+  position: absolute;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  width: 600px;
+  margin-top: 21rem;
+  background-color: transparent;
+  border-radius: 25px;
+  padding: 20px;
+  z-index: 100;
 }
   

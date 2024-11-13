@@ -9,7 +9,7 @@ function BusinessesIcon({ hovered, isActive }: IconProps) {
     };
 
     return (
-        <svg width="38" height="38" viewBox="0 0 141 113" fill="none" xmlns="http://www.w3.org/2000/svg"
+        <svg width="32" height="32" viewBox="0 0 141 113" fill="none" xmlns="http://www.w3.org/2000/svg"
         stroke={hovered || isActive ? "var(--text-hovered-color)" : "var(--text-color)"}
         style={{
           transition: pathStyle.transition,

@@ -9,25 +9,39 @@ interface BaseNavElementProps {
   name: string;              
   megaMenu: React.ElementType;
   isMobile: boolean;
-  isActive: boolean;
+  focused: boolean;
   onClick: () => void;
 }
 
-function BaseNavElement({ navIcon: NavIcon, name, megaMenu: MegaMenu, isMobile, isActive, onClick }: BaseNavElementProps) {
+function BaseNavElement({ navIcon: NavIcon, name, megaMenu: MegaMenu, isMobile, focused, onClick }: BaseNavElementProps) {
   const [hovered, setHovered] = useState(false);
+  let isActive = hovered || focused;
 
   return (
     <>
       <div className='base-nav-element'
         style={{
-          color: hovered || isActive ? 'var(--text-hovered-color)' : 'var(--text-color)',
+          color: isActive ? 'var(--text-hovered-color)' : 'var(--text-color)',
           fontSize: '1.2rem',
           position: 'relative',
+          fontWeight: 'bold',
+
+          // background style
+          // backgroundColor: hovered || isActive ? 'var(--bg-hovered-color)' : 'transparent',
+
+          border: isActive ? '1px solid var(--border-color)' : '1px solid transparent',
+          borderRadius: '20px',
+          padding: '15px',
+
+
+          // padding: '25px 0 25px 0',
+          
           // go up effect
-          // padding: hovered ? '18px 0 30px 0' : '25px 0 25px 0',
-          padding: '25px 0 25px 0',
+          // margin: hovered || isActive ? '18px 0px 36px 0px' : '0px',
+
           // increase size on hover
-          // transform: hovered ? 'scale(1.1)': 'scale(1)',
+          // transform: hovered || isActive ? 'scale(1.1)': 'scale(1)',
+
           transition: 'var(--transition)',
           cursor: 'pointer',
           display: 'flex',
@@ -44,7 +58,7 @@ function BaseNavElement({ navIcon: NavIcon, name, megaMenu: MegaMenu, isMobile, 
           alignItems: 'center',
           gap: '7px',
         }}>
-          <NavIcon hovered={hovered} isActive={isActive} />       
+          <NavIcon hovered={hovered} isActive={focused} />       
           <div className='base-nav-section-name' 
             style={{
             // fontSize: hovered ? '1.1em' : '1em',
@@ -53,45 +67,47 @@ function BaseNavElement({ navIcon: NavIcon, name, megaMenu: MegaMenu, isMobile, 
           }}>{name}
           </div>              
         </div>
-        <CaretIcon hovered={hovered} isActive={isActive}/>
+        <CaretIcon hovered={hovered} isActive={focused}/>
 
         {/* Glowing Underline */}
-        <div
+        {/* <div
           style={{
             position: 'absolute',
             bottom: 0,
             left: '50%',
             top: '100%',
-            width: hovered || isActive ? '100%' : '0', // Width expands on hover
+            width: hovered || isActive ? '85%' : '0', // Width expands on hover
             height: '1.5px', // Height of the underline
             background: 'var(--text-hovered-color)', // Color of the underline
-            boxShadow: hovered ? '0 -2px 8px var(--text-hovered-color)' : 'none', // Glow effect
+            // boxShadow: hovered ? '0 -2px 8px var(--text-hovered-color)' : 'none', // Glow effect
             transform: 'translateX(-50%)', // Center alignment
             transition: 'var(--transition)', // Smooth transition
           }}
-        />
+        /> */}
 
         {/* Megamenu - displayed only on hover */}
-        {hovered && (
+        {isActive ? (
           <div className="mega-menu" 
             style={{ 
-              position: 'absolute',
-              top: '90%',      
-              left: '50%',     // Center alignment reference
-              transform: hovered ? 'translate(-50%, 10px)' : 'translate(-50%, 0px)', // Center horizontally and add a small vertical offset
-              width: '600px',   
-              padding: '20px',  
-              backgroundColor: 'var(--bg-color)',
-              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-              borderRadius: '8px',
-              opacity: hovered ? 1 : 0,
-              // transition: 'opacity 1s ease', 
-              zIndex: 1000, // как в фотошопе слои, чем больше, тем выше
-              pointerEvents: hovered ? 'auto' : 'none', // Prevent interaction when hidden
+              // position: 'absolute',
+              // marginTop: '23rem',
+              // left: '50%',     // Center alignment reference
+              // transform: 'translate(-50%, 10px)', // Center horizontally and add a small vertical offset
+              // width: '600px',   
+              // // boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+              // backgroundColor: 'var(--bg-color-level1)',
+              // // opacity: isActive ? 1 : 0,
+              // borderRadius: '25px',
+              // padding: '20px',
+              // // transition: 'opacity 1s ease', 
+              // zIndex: 1000, // как в фотошопе слои, чем больше, тем выше
+              // pointerEvents: isActive ? 'auto' : 'none', // Prevent interaction when hidden
+              // transition: 'var(--transition)',
             }}>
-            <MegaMenu />
+              <div className='mega-menu-filler' style={{color: 'transparent', transition: 'var(--transition)',}}>filler</div>
+              <MegaMenu/>
           </div>
-        )}
+        ) : null}
       </div>
     </>
   );

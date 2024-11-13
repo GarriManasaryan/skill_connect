@@ -1,12 +1,24 @@
 .navbar-container {
     display: flex;
     /* именно image использовать, чтобы и градиент накладывался, и просто цвет */
-    /* background-color: var(--bg-color); */
+
     background-image: var(--bg-image);
 
     /* background-image: linear-gradient(to left, rgb(255, 255, 255), rgb(255, 251, 194), rgb(255, 248, 152), rgb(255, 219, 99), rgb(255, 208, 52)); */
     /* background-image: linear-gradient(to left, rgb(255, 255, 255), rgb(230, 236, 255), rgb(193, 207, 255), rgb(121, 152, 255)); */
     /* background-image: linear-gradient(to left, rgb(255, 255, 255), rgb(230, 236, 255)); */
+
+      /* Add the blur effect */
+    /* filter: blur(8px);
+    -webkit-filter: blur(8px); */
+
+    /* rouned */
+    border: 1px solid var(--text-color);
+    border-radius: 2.5rem;
+    margin: 1.5rem 3rem 1.5rem 3rem;
+    /* background-color: var(--bg-navbar); */
+
+    /* backdrop-filter: blur(10px); */
 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     flex-direction: row;
@@ -19,6 +31,7 @@
     /* если это оставить, то mega menu не будет отображаться */
     /* overflow: hidden; */
 }
+
 
 /* Mobile view: fixed to the bottom */
 @media (max-width: 768px) {

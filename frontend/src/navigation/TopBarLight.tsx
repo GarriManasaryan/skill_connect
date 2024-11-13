@@ -94,9 +94,9 @@ function TopBarLight() {
             <BaseNavElement 
               name={translations[language].navBar.professionals}
               navIcon={SpecialistsIcon} 
-              megaMenu={ProfessionalsMegaMenu}
+              megaMenu={ProductsMegaMenu}
               isMobile={isMobile}
-              isActive={activeSection === 'professionals'}
+              focused={activeSection === 'professionals'}
               onClick={() => handleSectionClick('professionals', '/professionals')}
             />
             <BaseNavElement 
@@ -104,7 +104,7 @@ function TopBarLight() {
               navIcon={RequestsIcon} 
               megaMenu={ProductsMegaMenu}
               isMobile={isMobile}
-              isActive={activeSection === 'orders'}
+              focused={activeSection === 'orders'}
               onClick={() => handleSectionClick('orders', '/orders')}
             />
             <BaseNavElement 
@@ -112,7 +112,7 @@ function TopBarLight() {
               navIcon={ProductIcon} 
               megaMenu={ProductsMegaMenu}
               isMobile={isMobile}
-              isActive={activeSection === 'products'}
+              focused={activeSection === 'products'}
               onClick={() => handleSectionClick('products', '/products')}
             />
             <BaseNavElement 
@@ -120,7 +120,7 @@ function TopBarLight() {
               navIcon={BusinessesIcon} 
               megaMenu={ProductsMegaMenu}
               isMobile={isMobile}
-              isActive={activeSection === 'companies'}
+              focused={activeSection === 'companies'}
               onClick={() => handleSectionClick('companies', '/companies')}
             />
         </div>
